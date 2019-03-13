@@ -21,6 +21,8 @@ module.exports = {
     ],
     // add your custom rules here
     'rules': {
+        'indent': 'off',
+        'space-before-function-paren': 'off',
         // allow paren-less arrow functions
         'arrow-parens': 0,
         // allow async-await
