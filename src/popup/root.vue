@@ -7,19 +7,20 @@
                     <el-col :span="8">
                         <div class="tab-circle border-circle vertical-center flex-wrap auto-margin">
                             <span class="tab-num width-full font-size-22 text-align-center"
-                                  v-text="tabsAllCount"></span>
+                                  v-text="tabsAllCount">0</span>
                             <span class="tab-type-text width-full text-align-center font-size-14">All</span>
                         </div>
                     </el-col>
                     <el-col :span="8">
                         <div class="tab-circle border-circle vertical-center flex-wrap auto-margin">
-                            <span class="tab-num width-full font-size-22 text-align-center">10</span>
+                            <span class="tab-num width-full font-size-22 text-align-center" v-text="tabsNormalCount">0</span>
                             <span class="tab-type-text width-full text-align-center font-size-14">Active</span>
                         </div>
                     </el-col>
                     <el-col :span="8">
                         <div class="tab-circle border-circle vertical-center flex-wrap auto-margin">
-                            <span class="tab-num width-full font-size-22 text-align-center">10</span>
+                            <span class="tab-num width-full font-size-22 text-align-center"
+                                  v-text="tabsSleepingCount">0</span>
                             <span class="tab-type-text width-full text-align-center font-size-14">Sleep</span>
                         </div>
                     </el-col>
@@ -29,17 +30,32 @@
     </div>
 </template>
 <script>
+    import TabManage from '../backend/index'
+
     export default {
         data: () => ({
-            tabs: []
+            tabs: [],
+            tabManage: null
         }),
         computed: {
             tabsAllCount() {
-                console.log(this.tabs)
                 return this.tabs.length
+            },
+            tabsSleepingCount() {
+                let count = 0
+                for (var i in this.tabManage.items) {
+                    if (this.tabManage.items[i].isSleeping) {
+                        count += 1
+                    }
+                }
+                return count
+            },
+            tabsNormalCount() {
+                return this.tabsAllCount - this.tabsSleepingCount
             }
         },
         created() {
+            this.tabManage = new TabManage()
         },
         mounted() {
             this.init()

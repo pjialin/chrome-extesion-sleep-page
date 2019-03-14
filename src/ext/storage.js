@@ -1,22 +1,26 @@
 export default {
-  get (key) {
-    try {
-      return JSON.parse(localStorage.getItem(key))
-    } catch (e) {}
-  },
-  set (key, val) {
-    try {
-      localStorage.setItem(key, JSON.stringify(val))
-    } catch (e) {}
-  },
-  remove (key) {
-    try {
-      localStorage.removeItem(key)
-    } catch (e) {}
-  },
-  clear () {
-    try {
-      localStorage.clear()
-    } catch (e) {}
-  }
+    get(key) {
+        try {
+            return JSON.parse(localStorage.getItem(key))
+        } catch (e) {
+        }
+    },
+    set(key, val) {
+        try {
+            localStorage.setItem(key, JSON.stringify(val))
+        } catch (e) {
+        }
+    },
+    remove(key) {
+        try {
+            localStorage.removeItem(key)
+        } catch (e) {
+        }
+    },
+    clear() {
+        try {
+            localStorage.clear()
+        } catch (e) {
+        }
+    }
 }
