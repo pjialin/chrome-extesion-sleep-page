@@ -1,10 +1,14 @@
 module.exports = {
-    name: 'Vue Extension',
+    name: 'Sleep Page',
     version: '1.0.0',
-    description: 'Vue.js Chrome Extension Template (wcer)',
-    author: 'yura',
+    description: 'Automatically put unused pages into hibernation, save memory usage.',
+    author: 'Jalin',
     manifest_version: 2,
-    icons: {'16': 'icons/16.png', '128': 'icons/128.png'},
+    icons: {
+        '16': 'icons/icon@16.png',
+        '48': 'icons/icon@48.png',
+        '128': 'icons/icon@128.png'
+    },
     permissions: [
         '<all_urls>',
         '*://*/*',
