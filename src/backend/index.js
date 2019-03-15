@@ -8,7 +8,7 @@ class TabManage {
     itemsKey = 'tab_items'
     tabs = []
     items = {}
-    tabSleepInterval = 5
+    tabSleepInterval = 60 * 30 // TODO convert to configs
 
     constructor() {
         this.loadTabItems()

@@ -1,27 +1,28 @@
 <template>
     <div id="popup">
-        <el-card>
-            <h5 class="action-title text-align-center">Tabs</h5>
+        <el-card shadow="never">
+            <h5 class="font-size-18 font-weight-normal margin-tb-1-rem">Tabs status</h5>
             <div class="tabs-container">
                 <el-row>
                     <el-col :span="8">
                         <div class="tab-circle border-circle vertical-center flex-wrap auto-margin">
-                            <span class="tab-num width-full font-size-22 text-align-center"
+                            <span class="tab-num width-full font-size-24 text-align-center line-height-15"
                                   v-text="tabsAllCount">0</span>
-                            <span class="tab-type-text width-full text-align-center font-size-14">All</span>
+                            <span class="tab-type-text width-full text-align-center font-size-12">All</span>
                         </div>
                     </el-col>
                     <el-col :span="8">
                         <div class="tab-circle border-circle vertical-center flex-wrap auto-margin">
-                            <span class="tab-num width-full font-size-22 text-align-center" v-text="tabsNormalCount">0</span>
-                            <span class="tab-type-text width-full text-align-center font-size-14">Active</span>
+                            <span class="tab-num width-full font-size-24 text-align-center line-height-15"
+                                  v-text="tabsNormalCount">0</span>
+                            <span class="tab-type-text width-full text-align-center font-size-12">Active</span>
                         </div>
                     </el-col>
                     <el-col :span="8">
                         <div class="tab-circle border-circle vertical-center flex-wrap auto-margin">
-                            <span class="tab-num width-full font-size-22 text-align-center"
+                            <span class="tab-num width-full font-size-24 text-align-center line-height-15"
                                   v-text="tabsSleepingCount">0</span>
-                            <span class="tab-type-text width-full text-align-center font-size-14">Sleep</span>
+                            <span class="tab-type-text width-full text-align-center font-size-12">Sleep</span>
                         </div>
                     </el-col>
                 </el-row>
@@ -74,43 +75,35 @@
 </script>
 <style lang="scss">
     #popup {
-        width: 400px;
-        min-height: 300px;
+        width: 360px;
+        min-height: 220px;
 
         .el-card {
-            min-height: 300px;
+            min-height: 220px;
+
+            .el-card__body {
+                padding-top: 0;
+            }
         }
 
         .tabs-container {
             .tab-circle {
                 padding: 5px;
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 border: 1px solid transparent;
             }
 
             .el-col:nth-child(1) .tab-circle {
-                border-color: #88abf3;
-
-                .tab-num {
-                    color: #88abf3;
-                }
+                border-color: #3469FC;
             }
 
             .el-col:nth-child(2) .tab-circle {
-                border-color: #a9fa82;
-
-                .tab-num {
-                    color: #a9fa82;
-                }
+                border-color: #F5A623;
             }
 
             .el-col:nth-child(3) .tab-circle {
-                border-color: #fbd082;
-
-                .tab-num {
-                    color: #fbd082;
-                }
+                border-color: #B7B7B7;
             }
         }
     }

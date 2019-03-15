@@ -10,9 +10,9 @@ module.exports = {
         '128': 'icons/icon@128.png'
     },
     permissions: [
-        '<all_urls>',
-        '*://*/*',
-        'activeTab',
+        // '<all_urls>',
+        // '*://*/*',
+        // 'activeTab',
         'tabs',
         // 'cookies',
         'background',
