@@ -7,15 +7,13 @@ class Tab {
     lastActiveDate = 0
     title = ''
     url = ''
+    favIconUrl = ''
     pinned = false
     isSleeping = false
 
     static newByTab(tab) {
         let _this = new Tab()
-        _this.id = tab.id
-        _this.title = tab.title
-        _this.url = tab.url
-        _this.pinned = tab.pinned
+        _this.updateInfo(tab)
         _this.updateLastActiveTime()
         return _this
     }
@@ -23,8 +21,15 @@ class Tab {
     save() {
         let tabManage = new TabManage()
         tabManage.items[this.id] = this
-        console.log(this, tabManage.items)
         tabManage.saveTabItems()
+    }
+
+    updateInfo(tab) {
+        this.id = tab.id
+        this.title = tab.title
+        this.url = tab.url
+        this.favIconUrl = tab.favIconUrl
+        this.pinned = tab.pinned
     }
 
     updateLastActiveTime() {

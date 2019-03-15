@@ -1,6 +1,8 @@
 import storage from '../ext/storage'
 import Tab from '../ext/tab'
-import sleepTemplate from '../assets/html/sleep.html'
+
+// import sleepTemplate from '../../static/html/sleep.html'
+let extensionUrl = chrome.extension.getURL('')
 
 class TabManage {
     itemsKey = 'tab_items'
@@ -15,6 +17,7 @@ class TabManage {
     runCycle() {
         this.loadTabItems()
         this.getTabs(() => {
+            this.syncTabItems()
             this.checkTabs()
         })
     }
@@ -37,11 +40,10 @@ class TabManage {
             let tab = this.tabs[i]
             let item = this.items[tab.id]
             if (item) {
-                if (item.url.indexOf('chrome') !== 0) {
-                    console.log(0)
+                item.updateInfo(tab)
+                if (item.url.indexOf('chrome') !== 0 && item.url.indexOf('view-source') !== 0) {
                     if (item.pinned || item.active) continue // Skip pinned and active tab
                     if (item.isSleeping) continue
-                    console.log(1)
                     let now = Date.now() / 1000
                     if (now - item.lastActiveTime > this.tabSleepInterval) { // go sleep
                         this.goSleep(item)
@@ -49,23 +51,29 @@ class TabManage {
                 }
                 continue
             }
-            item = Tab.newByTab(tab) // TODO update latest tab status to item
+            item = Tab.newByTab(tab)
             item.save()
             this.loadTabItems()
         }
     }
 
     goSleep(item) {
-        // console.log(item.title, tab.id, tab.url, 'go sleep')
         item.isSleeping = true
         this.saveTabItems()
 
         let data = {
-            title: 'Sleeping - ' + item.title
+            favIconUrl: item.favIconUrl,
+            url: item.url,
+            title: item.title,
+            lastActiveDate: item.lastActiveDate
         }
-        // JSON.parse('` + JSON.stringify(data) + `');`
-        let code = `document.open(); document.write(\`<script>window.pageData = JSON.parse('` + JSON.stringify(data) + `');</script>` + sleepTemplate + `\`); document.close();`
-        chrome.tabs.executeScript(item.id, {'code': code})
+
+        let dataStr = btoa(encodeURIComponent(JSON.stringify(data)))
+        let url = extensionUrl + 'html/sleep.html?data=' + dataStr
+        chrome.tabs.update(item.id, {url: url})
+
+        // let code = `document.open(); document.write(\`<script>window.pageData = JSON.parse('` + JSON.stringify(data) + `');</script>` + sleepTemplate + `\`); document.close();`
+        // chrome.tabs.executeScript(item.id, {'code': code})
     }
 
     /**
@@ -82,22 +90,48 @@ class TabManage {
     saveTabItems() {
         storage.set(this.itemsKey, this.items)
     }
+
+    removeTab(id) {
+        delete this.items[id]
+        this.saveTabItems()
+    }
+
+    syncTabItems() {
+        let tabIds = []
+        let change = false
+
+        this.tabs.forEach(res => {
+            tabIds.push(res.id)
+        })
+        Object.keys(this.items).forEach(res => {
+            if (!tabIds.includes(parseInt(res))) {
+                change = true
+                delete this.items[res]
+            }
+        })
+        if (change) this.saveTabItems()
+    }
 }
 
 let tabManage = new TabManage()
 
 setInterval(() => {
     tabManage.runCycle()
-}, 1000)
+}, 5000)
 // tabManage.runCycle()
 
 /** Event */
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === 'loading') { // refresh last change at
         let item = tabManage.items[tab.id]
-        if (item) item.updateLastActiveTime()
-        console.log(tabId, changeInfo, tab)
+        if (item && tab.url.indexOf(extensionUrl) !== 0) {
+            item.updateInfo(tab)
+            item.updateLastActiveTime()
+        }
     }
+})
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+    tabManage.removeTab(tabId)
 })
 
 export default TabManage

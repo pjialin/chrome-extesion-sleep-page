@@ -106,6 +106,9 @@ module.exports = {
         //     port: 3001,
         //     manifest: path.join(__dirname, '..', 'src', 'manifest.js')
         // }),
+        // new CopyWebpackPlugin([
+        //
+        // ])
     ],
     performance: {hints: false},
 }

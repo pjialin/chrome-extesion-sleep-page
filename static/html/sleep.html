@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1">
+    <title>Page in sleeping</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #fbfbfb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            line-height: 1.6;
+            /*font-family: Arial, x-locale-body, sans-serif;*/
+        }
+
+        .container {
+            height: 100%;
+            text-align: center;
+        }
+
+        /* Top */
+        .top {
+            height: 40%;
+        }
+
+        .top h1 {
+            margin: 0;
+            font-size: 32px;
+            padding: 0 10%;
+            height: 85%;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .top .hint {
+            position: absolute;
+            top: 34%;
+            display: block;
+            width: 100%;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        .middle {
+            height: 30%;
+            font-size: 90px;
+            /*font-weight: ;*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bottom {
+            height: 30%;
+        }
+
+        .top, .bottom {
+            /*background: #efeff0;*/
+        }
+
+        .bottom {
+            background: #000;
+        }
+
+        .bottom {
+            font-size: 30px;
+            /*color: #9B9B9B;*/
+            font-weight: 300;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 500px) {
+            .middle {
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top">
+        <h1>page title</h1>
+        <span class="hint">Have been sleeping</span>
+    </div>
+    <div class="middle">
+        <span>00 : 00 : 00</span>
+    </div>
+    <div class="bottom">
+        <span>Click here to wake it up</span>
+    </div>
+</div>
+</body>
+<script src="sleep.js"></script>
+</html>
