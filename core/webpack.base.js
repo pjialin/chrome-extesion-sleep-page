@@ -1,20 +1,21 @@
 const path = require('path')
 const webpack = require('webpack')
 const ChromeReloadPlugin = require('wcer')
-const {cssLoaders, htmlPage} = require('./tools')
+const {cssLoaders, htmlPage, RequireFromString} = require('./tools')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+// const Manifest = require('')
 
 let resolve = dir => path.join(__dirname, '..', 'src', dir)
 module.exports = {
     entry: {
-        tab: resolve('./tab'),
+        // tab: resolve('./tab'),
         popup: resolve('./popup'),
-        options: resolve('./options'),
-        content: resolve('./content'),
-        devtools: resolve('./devtools'),
+        // options: resolve('./options'),
+        // content: resolve('./content'),
+        // devtools: resolve('./devtools'),
         background: resolve('./backend'),
-        panel: resolve('./devtools/panel'),
-        inject: resolve('./content/inject'),
+        // panel: resolve('./devtools/panel'),
+        // inject: resolve('./content/inject'),
     },
     output: {
         path: path.join(__dirname, '..', 'build'),
@@ -95,20 +96,26 @@ module.exports = {
         ]
     },
     plugins: [
-        htmlPage('home', 'app', ['tab']),
+        // htmlPage('home', 'app', ['tab']),
         htmlPage('popup', 'popup', ['popup']),
-        htmlPage('panel', 'panel', ['panel']),
-        htmlPage('devtools', 'devtools', ['devtools']),
-        htmlPage('options', 'options', ['options']),
+        // htmlPage('panel', 'panel', ['panel']),
+        // htmlPage('devtools', 'devtools', ['devtools']),
+        // htmlPage('options', 'options', ['options']),
         htmlPage('background', 'background', ['background']),
         new CopyWebpackPlugin([{from: path.join(__dirname, '..', 'static')}]),
+        new CopyWebpackPlugin([{
+            from: path.join(__dirname, '..', 'src', 'manifest.js'),
+            to: 'manifest.json',
+            transform(content, path) {
+                content = RequireFromString(content.toString())
+                return Buffer.from(JSON.stringify(content))
+            },
+        }])
+        // new CopyWebpackPlugin([{from: path.join(__dirname, '..', 'static')}]),
         // new ChromeReloadPlugin({
-        //     port: 3001,
+        //     // port: 3001,
         //     manifest: path.join(__dirname, '..', 'src', 'manifest.js')
         // }),
-        // new CopyWebpackPlugin([
-        //
-        // ])
     ],
     performance: {hints: false},
 }

@@ -58,3 +58,10 @@ exports.styleLoaders = function (options) {
     }
     return output
 }
+
+exports.RequireFromString = function (src, filename) {
+    let Module = require("module")
+    let m = new Module()
+    m._compile(src, filename || '')
+    return m.exports
+}
